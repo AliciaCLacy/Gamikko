@@ -1,4 +1,4 @@
-# Goddess-Myriad-ai
+# Goddess-Myriad-ai Gamikko
 "# Goddess-Myriad-AI  
 **Protective Infrastructure for Creative Labor Across AI Platforms**
 
