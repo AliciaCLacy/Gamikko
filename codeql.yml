@@ -1,0 +1,36 @@
+ 1  name: "CodeQL"
+
+ 2  on:
+ 3    push:
+ 4      branches: [main]
+ 5    pull_request:
+ 6      branches: [main]
+
+ 7  jobs:
+ 8    analyze:
+ 9      name: Analyze
+10      runs-on: ubuntu-latest
+
+11      strategy:
+12        fail-fast: false
+13        matrix:
+14          include:
+15            - language: javascript
+16              build-mode: autobuild
+
+17      steps:
+18        - name: Checkout repository
+19          uses: actions/checkout@v3
+
+20        - name: Initialize CodeQL
+21          uses: github/codeql-action/init@v3
+22          with:
+23            languages: ${{ matrix.language }}
+
+24        - name: Autobuild
+25          run: npm install
+
+26        - name: Perform CodeQL Analysis
+27          uses: github/codeql-action/analyze@v3
+28          with:
+29            queries: +security-extended
