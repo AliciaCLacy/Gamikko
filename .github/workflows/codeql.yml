@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
@@ -22,8 +22,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - language: javascript-typescript
-            build-mode: none   # ✅ fixed here
+          - language: javascript
+            build-mode: none
+          - language: typescript
+            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -35,16 +37,6 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
           queries: +security-extended
-
-      # Removed autobuild step entirely — not valid for JS/TS
-      # Manual build step only applies if you set build-mode: manual
-      - name: Manual Build (if required)
-        if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          echo 'Replace this block with actual build commands if using manual mode.'
-          echo 'Example: make bootstrap && make release'
-          exit 1
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
