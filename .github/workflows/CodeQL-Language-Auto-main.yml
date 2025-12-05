@@ -1,0 +1,74 @@
+name: CodeQL + Translator Interactions
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "0 0 * * 3"  # every Wednesday at midnight
+
+jobs:
+  analyze-and-interact:
+    name: CodeQL Analysis & Translated Interactions
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Initialize CodeQL with automatic language detection
+      - name: Initialize CodeQL
+        id: init
+        uses: github/codeql-action/init@v4
+        with:
+          autoload-languages: true
+          queries: security-extended
+
+      # Step 3: Verify detected languages
+      - name: Verify detected languages
+        run: |
+          echo "Detected languages: ${{ steps.init.outputs.languages }}"
+          if [ -z "${{ steps.init.outputs.languages }}" ]; then
+            echo "No detectable languages found. Skipping analysis."
+            exit 0
+          fi
+
+      # Step 4: Perform CodeQL Analysis
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+
+      # Step 5: Translator Interaction between Agent, Teacher, and Social Worker
+      - name: Translator Interactions
+        env:
+          TRANSLATE_API_KEY: ${{ secrets.TRANSLATE_API_KEY }}  # store your API key in repo secrets
+        run: |
+          # Agent message
+          AGENT_MSG="Please review the student report."
+          echo "Agent says: $AGENT_MSG"
+
+          # Translate Agent → Teacher (English → Spanish)
+          TEACHER_MSG=$(curl -s -X POST "https://api.deepl.com/v2/translate" \
+            -d "auth_key=$TRANSLATE_API_KEY" \
+            -d "text=$AGENT_MSG" \
+            -d "target_lang=ES" | jq -r '.translations[0].text')
+          echo "Teacher receives: $TEACHER_MSG"
+
+          # Teacher response
+          TEACHER_REPLY="Report reviewed, feedback added."
+          echo "Teacher says: $TEACHER_REPLY"
+
+          # Translate Teacher → Social Worker (English → French)
+          SOCIAL_WORKER_MSG=$(curl -s -X POST "https://api.deepl.com/v2/translate" \
+            -d "auth_key=$TRANSLATE_API_KEY" \
+            -d "text=$TEACHER_REPLY" \
+            -d "target_lang=FR" | jq -r '.translations[0].text')
+          echo "Social Worker receives: $SOCIAL_WORKER_MSG"
+
+          # Optional: Placeholder for voice output
+          echo "Generating voice output... (integration with TTS service here)"
