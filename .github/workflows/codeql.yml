@@ -1,4 +1,4 @@
-name: "CodeQL Advanced"
+name: CodeQL Advanced
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       matrix:
         include:
           - language: javascript-typescript
-            build-mode: autobuild
+            build-mode: none   # ✅ fixed here
 
     steps:
       - name: Checkout repository
@@ -36,6 +36,8 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           queries: +security-extended
 
+      # Removed autobuild step entirely — not valid for JS/TS
+      # Manual build step only applies if you set build-mode: manual
       - name: Manual Build (if required)
         if: matrix.build-mode == 'manual'
         shell: bash
@@ -46,4 +48,3 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-
