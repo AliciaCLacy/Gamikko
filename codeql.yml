@@ -34,3 +34,4 @@
 27          uses: github/codeql-action/analyze@v3
 28          with:
 29            queries: +security-extended
+License exclusive and non‑exclusive rights belong to Alicia C. Lacy. 
