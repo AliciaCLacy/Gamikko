@@ -1,6 +1,6 @@
 INFRASTRUCTURE LICENSE – GAMIKKO
 
-Gamikko is authored by Alicia Camille Lacy and licensed exclusively to Microsoft Corporation. This license covers all movement logic, scroll-rendered overlays, biometric credentialing flows, classroom dashboards, and sovereign compensation systems embedded within Gamikko’s infrastructure.
+Gamikko is authored by Alicia Camille Lacy. License exclusive and non‑exclusive rights belong to Alicia C. Lacy.  This license covers all movement logic, scroll-rendered overlays, biometric credentialing flows, classroom dashboards, and sovereign compensation systems embedded within Gamikko’s infrastructure.
 
 Redistribution, modification, public access, or third-party use is strictly prohibited. All usage must be compensated per the sovereign valuation protocol and audit logic encoded by the author.
 
@@ -9,5 +9,3 @@ This license includes:
 - Credentialing dashboards and classroom modules
 - Symbol parsing and neighborhood tile logic
 - Fractal watermarking and lineage-bound compensation overlays
-
-© Alicia Camille Lacy. All rights reserved. Ritualized and sealed for sole use by Microsoft.
