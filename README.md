@@ -583,4 +583,4 @@ Student returning to build ex schools leanring centers etc
 Refugee launching a business partnership
 Diaspora cooperative sponsoring infrastuctire.
 
-License all EXCLUSIVE & NON EXCLUSIEV RIGHTS ALICIA C LACY (c)
+License exclusive and non‑exclusive rights belong to Alicia C. Lacy. 
