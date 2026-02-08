@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+exclusive & non‑exclusive rights notice
+Copyright © Alicia C. Lacy. All rights reserved.
+All exclusive and non‑exclusive rights to this work, including but not limited to its code, design, structure, architecture, documentation, symbolic systems, naming conventions, and all derivative logic, are owned solely by Alicia C. Lacy.
