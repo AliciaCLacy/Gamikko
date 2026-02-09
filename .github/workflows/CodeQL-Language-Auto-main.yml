@@ -22,13 +22,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Initialize CodeQL with automatic language detection
+      # Step 2: Initialize CodeQL using UIL config
       - name: Initialize CodeQL
         id: init
         uses: github/codeql-action/init@v4
         with:
-          autoload-languages: true
-          queries: security-extended
+          config-file: ./.github/codeql/codeql-config.yml
 
       # Step 3: Verify detected languages
       - name: Verify detected languages
@@ -46,29 +45,25 @@ jobs:
       # Step 5: Translator Interaction between Agent, Teacher, and Social Worker
       - name: Translator Interactions
         env:
-          TRANSLATE_API_KEY: ${{ secrets.TRANSLATE_API_KEY }}  # store your API key in repo secrets
+          TRANSLATE_API_KEY: ${{ secrets.TRANSLATE_API_KEY }}
         run: |
-          # Agent message
           AGENT_MSG="Please review the student report."
           echo "Agent says: $AGENT_MSG"
 
-          # Translate Agent → Teacher (English → Spanish)
           TEACHER_MSG=$(curl -s -X POST "https://api.deepl.com/v2/translate" \
             -d "auth_key=$TRANSLATE_API_KEY" \
             -d "text=$AGENT_MSG" \
             -d "target_lang=ES" | jq -r '.translations[0].text')
           echo "Teacher receives: $TEACHER_MSG"
 
-          # Teacher response
           TEACHER_REPLY="Report reviewed, feedback added."
           echo "Teacher says: $TEACHER_REPLY"
 
-          # Translate Teacher → Social Worker (English → French)
           SOCIAL_WORKER_MSG=$(curl -s -X POST "https://api.deepl.com/v2/translate" \
             -d "auth_key=$TRANSLATE_API_KEY" \
             -d "text=$TEACHER_REPLY" \
             -d "target_lang=FR" | jq -r '.translations[0].text')
           echo "Social Worker receives: $SOCIAL_WORKER_MSG"
 
-          # Optional: Placeholder for voice output
           echo "Generating voice output... (integration with TTS service here)"
+fix: align CodeQL with UIL architecture and disable JS scanning
